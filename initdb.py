@@ -4,9 +4,7 @@ from sqlalchemy import create_engine, Table, Column, MetaData
 from sqlalchemy import DateTime, Float, Integer, String
 
 """
-I'll be using the SQLAlchemy ORM approach to defining, creating,
-and inserting into a database. For this we'll need an instance 
-the SQLAlchemy of `MetaData` object.
+Create an instance the SQLAlchemy of `MetaData` object.
 """
 meta = MetaData()
 
@@ -22,9 +20,7 @@ os_env_db_url = os.environ.get('DATABASE_URL', '')
 If we don't have an environment variable 'DATABASE_URL' the value in
 `os_env_db_url` will be an empty string. In which case we will use
 a sqlite database - this allows us to do development without having to
-configure a SQL Database. I wouldn't advise using a sqlite database in
-the case you're expecting multiple concurrent access to the database,
-but for development purposes it should be fine.
+configure a SQL Database.
 """
 connection = os_env_db_url or "sqlite:///db.sqlite"
 
@@ -51,7 +47,7 @@ if not engine.has_table("cuisine_ingredients"):
         Column('id', Integer, primary_key=True, autoincrement=True),
         Column('cuisine', String),
         Column('recipe', String),
-        Column('full_ingredients', String),
+        Column('full_ingredients', Text),
     )
 
     meta.create_all(engine)

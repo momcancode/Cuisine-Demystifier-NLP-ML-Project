@@ -47,7 +47,7 @@ if not engine.has_table("cuisine_ingredients"):
         Column('id', Integer, primary_key=True, autoincrement=True),
         Column('cuisine', String),
         Column('recipe', String),
-        Column('full_ingredients', Text),
+        Column('full_ingredients', String),
     )
 
     meta.create_all(engine)
@@ -60,7 +60,7 @@ if not engine.has_table("cuisine_ingredients"):
     """
     seed_data = list()
 
-    with open('data/cuisine_full_ingredients.csv', newline='') as input_file:
+    with open('data/cuisine_full_ingredients.csv', newline='', encoding='utf8') as input_file:
         reader = csv.DictReader(input_file)       #csv.reader is used to read a file
         for row in reader:
             seed_data.append(row)

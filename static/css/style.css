@@ -7,12 +7,16 @@
   margin-bottom: 0;
 }
 
-h1 {
-  color: white !important;
+.jumbotron h1 {
+  color: white;
 }
 
-p {
+.jumbotron p {
   color: white;
+}
+
+body {
+  margin-bottom: 100px;
 }
 
 footer {
@@ -29,6 +33,3 @@ footer {
   color: lightgray;
 }
 
-body {
-  margin-bottom: 100px;
-}

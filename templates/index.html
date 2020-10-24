@@ -1,97 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   <meta charset="utf-8">
-  <title>Animal Map</title>
-
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-    crossorigin="">
-
-  <!-- Marker Cluster CSS -->
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-  <!-- Our CSS -->
-  <link rel="stylesheet" type="text/css" href="static/landing_page/css/style.css">
+  <title>Cuisine Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
+  <div class="wrapper">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">UFO Sightings
+            <img class="nav-ufo" src="static/images/nasa.jpg">
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="hero text-center">
+      <h1>UFO Sightings</h1>
+      <p>The Truth is Out There</p>
+    </div>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/data">Data</a>
-          </li>
-        </ul>
-
-        <div class="jumbotron text-center">
-          <h1>Victoria Threatened Species Map</h1>
-          <p>Use the interactive map below to explore the dataset</p>
+    <div class="container">
+      <div class="row margin-top-50">
+        <div class="col-md-2">
+          <aside class="filters">
+            <div class="panel panel-default">
+              <div class="panel-heading">Filter Search</div>
+              <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <ul class="list-group" id="filters">
+                      <li class="filter list-group-item">
+                        <label for="date">Enter a Date</label>
+                        <input class="form-control" id="datetime" type="text" placeholder="1/13/2011">
+                      </li>
+                    </ul>
+                  </div>
+                  <button id="filter-btn" type="button" class="btn btn-default">Filter Table</button>
+                </form>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="col-md-10">
+          <div id="table-area" class="">
+            <table id="ufo-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="table-head">Date</th>
+                  <th class="table-head">City</th>
+                  <th class="table-head">State</th>
+                  <th class="table-head">Country</th>
+                  <th class="table-head">Shape</th>
+                  <th class="table-head">Duration</th>
+                  <th class="table-head">Comments</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-        
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-
-        <div class="introduction">
-          <h4>
-            Victoria is home to a number of threatened species. Some of these are rare to see in the wild but
-            well worth the effort for avid animal lovers, families looking for an adventure, or those who are
-            staycationing at Victoria's national parks, coastal towns, and regional towns.
-            <br>
-            <br> Our website is built up using fauna sightings data from 2015 to 2020 provided by Victorian Biodiversity Atlas (VBA).
-            The VBA fauna observations are a foundation dataset that feeds into many biodiversity tools used in government's
-            everyday decision making for nature conservation - showing where wildlife is now and how this has changed over time.
-            This makes it a core input to the majority of the government's processes and programs that impact native species.
-            <br>
-            <br>
-            Our interactive map is designed to help you identify what type of threatened species has been seen in a particular area.
-            If you want to learn more about some of the threatened species, please check out our dashboard and data pages.
-            <br>
-           <br><b>Have fun exploring Victoria's diverse wildlife!</b>
-          </h4>
-        </div>
-        <!-- The div where we will inject our map -->
-        <div id="map"></div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
+    <footer class="footer">
+      <span class="bottom">Monash University Data Analytics Bootcamp - Final Project</span>
+    </footer>
   </div>
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-    crossorigin=""></script>
-
+  
   <!--D3 cdn-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"></script>
-
-  <!-- Marker Cluster -->
-  <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
-
   <!-- D3 JS -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
-  <!-- API key -->
-  <!-- <script type="text/javascript" src="static/landing_page/js/config.js"></script> -->
-
-  <!-- JS -->
-  <script type="text/javascript" src="static/js/logic.js"></script>
-
+  <script src="static/js/logic.js"></script>
 </body>
+
 </html>

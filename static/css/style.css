@@ -1,10 +1,9 @@
 .jumbotron {
-  background: url('/static/images/neuron.jpg');
+  background: url('/static/images/coverphoto2.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-bottom: 5px;
-  padding-top: 50px;
+  min-height: 350px;
   margin-bottom: 0;
 }
 

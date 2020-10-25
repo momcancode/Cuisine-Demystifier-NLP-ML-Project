@@ -22,115 +22,29 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "s
 # Remove tracking modifications
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Using the `flask_sqlalchemy` library we'll create our variable `db` that is the connection to our database
+# Use the `flask_sqlalchemy` library we'll create our variable `db` that is the connection to our database
 db = SQLAlchemy(app)
 
 """
-from `models.py` we call `create_classes` that we will have 
-a reference to the class we defined `Cuisine` that is 
-bound to the underylying database table.
+From `models.py` we call `create_classes` that we will have a reference to the class
+we defined `Cuisine` that is bound to the underlying database table.
 """
 Cuisine = create_classes(db)
 
 # create route that renders index.html template
 @app.route("/")
 def home():
-    """
-    Render the index.html template
-    """
-    return render_template("index.html")
 
-def query_results_to_dicts(results):
-    """
-    A helper method for converting SQLAlchemy Query objects 
-    (https://docs.sqlalchemy.org/en/13/orm/query.html#sqlalchemy.orm.query.Query)
-    to a format that is json serialisable 
-    """
-    return simplejson.dumps(results)
-
-@app.route("/api/all")
-def all():
-
-    results = db.session.query(
-        Cuisine.cuisine,
-        Cuisine.recipe,
-        Cuisine.full_ingredients
-    ).all()
-
-    return query_results_to_dicts(results)
-
-
-
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    """
-    Display the main webpage where users can enter theirs details
-    which we will then pass to the prediction endpoint
-    """
     return render_template("index.html")
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.json    
-
-    col_order = [
-        "age","sibsp","parch","fare","is_female",
-        "embarked_c","embarked_q","pclass_1","pclass_2"
-        ]
-
-    rename_cols = {
-         "age": "age", 
-         "numberOfSiblings": "sibsp", 
-         "numberOfParents": "parch", 
-         "fare": "fare", 
-        #"gender", 
-        #"passengerClass", 
-        #"portOfEmbarkment": ""
-    }
-
-    # convert gender to is_female
-    if (data["gender"] == "female"):
-        data["is_female"] = 1
-    else:
-        data["is_female"] = 0
-    
-    del data["gender"]
-
-    # convert passengerClass
-    if (data["passengerClass"] == 1):
-        data["pclass_1"] = 1
-        data["pclass_2"] = 0
-    elif (data["passengerClass"] == 2):
-        data["pclass_1"] = 0
-        data["pclass_2"] = 1
-    elif (data["passengerClass"] == 3):
-        data["pclass_1"] = 0
-        data["pclass_2"] = 0
-
-    del data["passengerClass"]
-    
-    # convert portOfEmbarkment
-    if (data["portOfEmbarkment"] == "S"):
-        data["embarked_c"] = 0
-        data["embarked_q"] = 0
-    elif (data["portOfEmbarkment"] == "C"):
-        data["embarked_c"] = 1
-        data["embarked_q"] = 0        
-    elif (data["portOfEmbarkment"] == "Q"):
-        data["embarked_c"] = 0
-        data["embarked_q"] = 1
-    
-    del data["portOfEmbarkment"]
     
     # create dataframe from received data
-    # rename columns and sort as per the 
-    # order columns were trained on
     try:
-        df = pd.DataFrame([data]).rename(columns=rename_cols)[col_order]
+        df = pd.DataFrame([data])
     except Exception as e:
         print("Error Parsing Input Data")
         print(e)
@@ -145,6 +59,27 @@ def predict():
     result = model.predict(X).tolist()    
 
     return jsonify({"result": result})
+
+
+# def query_results_to_dicts(results):
+#     """
+#     A helper method for converting SQLAlchemy Query objects 
+#     (https://docs.sqlalchemy.org/en/13/orm/query.html#sqlalchemy.orm.query.Query)
+#     to a format that is json serialisable 
+#     """
+#     return simplejson.dumps(results)
+
+# @app.route("/api/all")
+# def all():
+
+#     results = db.session.query(
+#         Cuisine.cuisine,
+#         Cuisine.recipe,
+#         Cuisine.full_ingredients
+#     ).all()
+
+#     return query_results_to_dicts(results)
+
 
 # def get_selected_race():
 #     """

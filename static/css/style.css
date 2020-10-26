@@ -11,12 +11,12 @@ body {
   margin-bottom: 100px;
 }
 
-.jumbotron h1 {
-  color: white;
-}
-
-.jumbotron p {
-  color: white;
+#header {
+  padding-left: 50px;
+  padding-top: 60px;
+  color: whitesmoke;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: italic;
 }
 
 .form-control {

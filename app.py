@@ -38,27 +38,27 @@ def home():
     return render_template("index.html")
 
 
-# @app.route("/predict", methods=["POST"])
-# def predict():
-#     data = request.json    
+@app.route("/predict", methods=["POST"])
+def predict():
+    data = request.json    
     
-#     # create dataframe from received data
-#     try:
-#         df = pd.DataFrame([data])
-#     except Exception as e:
-#         print("Error Parsing Input Data")
-#         print(e)
-#         return "Error"
+    # create dataframe from received data
+    try:
+        df = pd.DataFrame([data])
+    except Exception as e:
+        print("Error Parsing Input Data")
+        print(e)
+        return "Error"
 
-#     X = df.values
+    X = df.values
 
-#     model = load_model()
+    model = load_model()
 
-#     # convert nparray to list so we can
-#     # serialise as json
-#     result = model.predict(X).tolist()    
+    # convert nparray to list so we can
+    # serialise as json
+    result = model.predict(X).tolist()    
 
-#     return jsonify({"result": result})
+    return jsonify({"result": result})
 
 
 # def query_results_to_dicts(results):

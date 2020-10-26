@@ -3,8 +3,12 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 350px;
+  min-height: 300px;
   margin-bottom: 0;
+}
+
+body {
+  margin-bottom: 100px;
 }
 
 .jumbotron h1 {
@@ -15,9 +19,11 @@
   color: white;
 }
 
-body {
-  margin-bottom: 100px;
-}
+.form-control {
+  height: 250px;
+  margin: auto;
+  position: relative;
+ }
 
 footer {
   position: fixed;
@@ -28,8 +34,8 @@ footer {
   margin-top: 200 auto;
   box-sizing: border-box;
   display: block;
-  border-top: 15 px solid #007CBD;
-  background-color: #004b87;
-  color: lightgray;
+  /* border-top: 15 px solid #007CBD; */
+  background-color: rgb(255, 71, 95);
+  color: whitesmoke;
 }
 

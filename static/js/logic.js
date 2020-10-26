@@ -6,44 +6,24 @@
 
 console.log("App Ready");
 
-d3.select("#doCheckTicket").on("click", (event) => doCheckTicket(event));
+d3.select("#findCuisine").on("click", (event) => findCuisine(event));
 
-function doCheckTicket(event) {
+function findCuisine(event) {
     d3.event.preventDefault();
-    console.log("Checking Ticket");
+    console.log("Checking Cuisine");
 
-    let age = d3.select("#inputAge").node().value;
-    let gender = d3.select("#inputGender").node().value;
-    let passengerClass = d3.select("#inputPassengerClass").node().value;
-    let numberOfSiblings = d3.select("#inputNumberOfSiblings").node().value;
-    let numberOfParents = d3.select("#inputNumberOfParents").node().value;
-    let fare = d3.select("#inputFare").node().value;
-    let portOfEmbarkment = d3.select("#inputPortOfEmbarkment").node().value;
-
-    let data = {
-        "age": parseFloat(age),
-        "gender": gender,
-        "passengerClass": parseInt(passengerClass),
-        "numberOfSiblings": parseInt(numberOfSiblings),
-        "numberOfParents": parseInt(numberOfParents),
-        "fare": parseFloat(fare),
-        "portOfEmbarkment": portOfEmbarkment,
-    }
+    let data = d3.select("#ingredients").node().value;
 
     console.log(data);
 
     d3.json(
         "/predict", {
             method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
+            body: JSON.stringify(data)
         }
     ).then(
         (data) => showResult(data)
     );
-
 }
 
 function showResult(data) {
@@ -58,6 +38,4 @@ function showResult(data) {
     }
 
     d3.select("#alertOutcome").text(outcome);
-
-
 }

@@ -58,17 +58,17 @@ def home():
 
 
 # Create a function to clean ingredient text
-def clean(doc):
-    doc = doc.str.lower()
-    doc = doc.str.replace(r'\w*[\d¼½¾⅓⅔⅛⅜⅝]\w*', '')
-    doc = doc.str.translate(str.maketrans('', '', string.punctuation))
-    doc = doc.str.replace(r'[£×–‘’“”⁄]', '')
-    doc = doc.apply(lambda x: word_tokenize(x))
-    doc = doc.apply(lambda x: [word for word in x if not word in stop_words_nltk])
-    doc = doc.apply(lambda x: [stemmer.stem(word) for word in x])
-    processed_doc = doc.apply(lambda x: ' '.join([word for word in x]))
+def preprocess(text):
+    text = text.lower()
+    text = re.sub(r'\w*[\d¼½¾⅓⅔⅛⅜⅝]\w*', '', text)
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    text = re.sub(r'[£×–‘’“”⁄]', '', text)
+    words = word_tokenize(text)
+    words_no_stopwords = [word for word in words if not word in stop_words_nltk]
+    stemmed_words = [stemmer.stem(word) for word in words_no_stopwords]
+    processed_text = ' '.join([word for word in stemmed_words])
     
-    return processed_doc
+    return processed_text
 
 
 @app.route("/predict", methods=["POST"])
@@ -77,7 +77,7 @@ def predict():
     
     # create panda series from received data
     try:
-        X_cleaned = pd.Series([clean(data)])
+        X_cleaned = pd.Series([preprocess(data)])
     except Exception as e:
         print("Error Parsing Input Data")
         print(e)
@@ -86,10 +86,15 @@ def predict():
     model = load_model()
 
     # convert nparray to list so that we can serialise as json
-    result = model.predict(tfidf.fit_transform(X_cleaned)).tolist()
-    print(result)    
+    result = model.predict(tfidf.fit_transform(X_cleaned)).tolist()    
 
     return jsonify({"result": result})
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+    outcome = predict()
+    print(outcome)
 
 
 # def query_results_to_dicts(results):
@@ -366,5 +371,3 @@ def predict():
 #     return jsonify([dict(row) for row in results])
 
 
-if __name__ == "__main__":
-    app.run(debug=True)

@@ -3,9 +3,6 @@
 // 	console.log(data)
 // });
 
-
-console.log("App Ready");
-
 d3.select("#findCuisine").on("click", (event) => findCuisine(event));
 
 function findCuisine(event) {

@@ -26,7 +26,7 @@ from sklearn.svm import SVC
 # SQL Alchemy
 from sqlalchemy import create_engine
 
-MODEL_PATH = "trained_model.joblib"
+MODEL_PATH = "model/trained_model.joblib"
 
 # Create a function to clean ingredient text
 def clean(doc):

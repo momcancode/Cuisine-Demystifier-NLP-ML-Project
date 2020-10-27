@@ -1,5 +1,9 @@
 # import necessary libraries
 import pandas as pd
+import numpy as np
+import re
+import string
+
 import os
 import simplejson
 from sqlalchemy.sql import select, column, text
@@ -7,8 +11,23 @@ from sqlalchemy.sql.expression import func
 from flask import (Flask, render_template, jsonify, request, redirect)
 from models import create_classes
 from flask_sqlalchemy import SQLAlchemy
+
+# NLTK
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+nltk.download('stopwords')
+stop_words_nltk = set(stopwords.words('english'))
+from nltk.stem.porter import PorterStemmer
+stemmer = PorterStemmer()
+
+# Machine learning
 from joblib import load
-from model.train import load_model, load_data, split_data
+from model.train import load_model
+import sklearn
+from sklearn.feature_extraction.text import TfidfVectorizer
+tfidf = TfidfVectorizer()
 
 # Let's setup our Flask application.
 app = Flask(__name__)
@@ -38,25 +57,36 @@ def home():
     return render_template("index.html")
 
 
+# Create a function to clean ingredient text
+def clean(doc):
+    doc = doc.str.lower()
+    doc = doc.str.replace(r'\w*[\d¼½¾⅓⅔⅛⅜⅝]\w*', '')
+    doc = doc.str.translate(str.maketrans('', '', string.punctuation))
+    doc = doc.str.replace(r'[£×–‘’“”⁄]', '')
+    doc = doc.apply(lambda x: word_tokenize(x))
+    doc = doc.apply(lambda x: [word for word in x if not word in stop_words_nltk])
+    doc = doc.apply(lambda x: [stemmer.stem(word) for word in x])
+    processed_doc = doc.apply(lambda x: ' '.join([word for word in x]))
+    
+    return processed_doc
+
+
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.json    
     
-    # create dataframe from received data
+    # create panda series from received data
     try:
-        df = pd.DataFrame([data])
+        X_cleaned = pd.Series([clean(data)])
     except Exception as e:
         print("Error Parsing Input Data")
         print(e)
         return "Error"
 
-    X = df.values
-
     model = load_model()
 
-    # convert nparray to list so we can
-    # serialise as json
-    result = model.predict(X).tolist()    
+    # convert nparray to list so that we can serialise as json
+    result = model.predict(tfidf.fit_transform(X_cleaned)).tolist()    
 
     return jsonify({"result": result})
 

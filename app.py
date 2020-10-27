@@ -24,7 +24,7 @@ stemmer = PorterStemmer()
 
 # Machine learning
 from joblib import load
-from model.train import load_model
+from model.train import load_model, fit_tfidf
 import sklearn
 from sklearn.feature_extraction.text import TfidfVectorizer
 tfidf = TfidfVectorizer()
@@ -73,22 +73,25 @@ def preprocess(text):
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    data = request.json    
+    data = request.json
+    ingredient_text = data["ingredients"]
     
     # create panda series from received data
     try:
-        X_cleaned = pd.Series([preprocess(data)])
+        X_cleaned = pd.Series([preprocess(ingredient_text)])
     except Exception as e:
         print("Error Parsing Input Data")
         print(e)
         return "Error"
 
     model = load_model()
+    fitted_tfidf = fit_tfidf()
 
     # convert nparray to list so that we can serialise as json
-    result = model.predict(tfidf.fit_transform(X_cleaned)).tolist()    
+    result = model.predict(fitted_tfidf.transform(X_cleaned)).tolist()    
 
     return jsonify({"result": result})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

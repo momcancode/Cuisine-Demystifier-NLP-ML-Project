@@ -112,13 +112,19 @@ def resampling(X_train, y_train):
 def get_model():
     return SVC(kernel='linear')
 
-# Train the model
-def train_model(model, X_train_new, y_train_new):
+# Fit tfidf to X_train
+def fit_tfidf():
 
     # Feature engineering using TF-IDF
     X_train_transformed = tfidf.fit_transform(X_train_new)
 
+    return X_train_transformed
+
+# Train the model
+def train_model(model, X_train_transformed, y_train_new):
+
     model.fit(X_train_transformed, y_train_new)
+
 
 def save_model(model):
     dump(model, MODEL_PATH)

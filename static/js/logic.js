@@ -16,23 +16,26 @@ function findCuisine(event) {
     d3.json(
         "/predict", {
             method: "POST",
-            body: JSON.stringify(data)
+			body: JSON.stringify(data),
+			headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
         }
     ).then(
-        (data) => showResult(data)
+        (data) => d3.select("#alertOutcome").text(data[0])
     );
 }
 
-function showResult(data) {
-    console.log("showResult");
-    console.log(data);
-    var outcome = "Unknown";
+// function showResult(data) {
+//     console.log("showResult");
+//     console.log(data);
+//     var outcome = "Unknown";
 
-    if (data[0] == 1) {
-        outcome = "Survived";
-    } else {
-        outcome = "Dead";
-    }
+//     if (data[0] == "I") {
+//         outcome = "Survived";
+//     } else {
+//         outcome = "Dead";
+//     }
 
-    d3.select("#alertOutcome").text(outcome);
-}
+//     ;
+// }

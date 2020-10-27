@@ -86,7 +86,8 @@ def predict():
     model = load_model()
 
     # convert nparray to list so that we can serialise as json
-    result = model.predict(tfidf.fit_transform(X_cleaned)).tolist()    
+    result = model.predict(tfidf.fit_transform(X_cleaned)).tolist()
+    print(result)    
 
     return jsonify({"result": result})
 

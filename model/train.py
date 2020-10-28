@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import re
 import string
-from joblib import dump, load
+from joblib import dump
+from pickle import dump
 
 # NLTK
 import nltk
@@ -19,14 +20,13 @@ stemmer = PorterStemmer()
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-tfidf = TfidfVectorizer()
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.utils import resample
 from sklearn.svm import SVC
 
 # SQL Alchemy
 from sqlalchemy import create_engine
 
-MODEL_PATH = "model/trained_model.joblib"
 
 # Create a function to clean ingredient text
 def clean(doc):
@@ -112,25 +112,25 @@ def resampling(X_train, y_train):
 def get_model():
     return SVC(kernel='linear')
 
-# Fit tfidf to X_train
-def fit_tfidf(X_train_new):
 
-    # Feature engineering using TF-IDF
-    X_train_transformed = tfidf.fit_transform(X_train_new)
+# Save vectorizer vocab
+def save_vocab(X_train_new):
+    vectorizer = CountVectorizer(decode_error="replace")
+    vectorizer.fit_transform(X_train_new)
+    pickle.dump(vectorizer.vocabulary_, open("feature.pkl","wb"))
 
-    return X_train_transformed
 
 # Train the model
-def train_model(model, X_train_transformed, y_train_new):
+def train_model(model, X_train_new, y_train_new):
 
+    # Feature engineering using TF-IDF
+    tfidf = TfidfVectorizer()
+    X_train_transformed = tfidf.fit_transform(X_train_new)
     model.fit(X_train_transformed, y_train_new)
 
 
 def save_model(model):
-    dump(model, MODEL_PATH)
-
-def load_model():
-    return load(MODEL_PATH)
+    dump(model, "trained_model.joblib")
 
 
 if __name__ == "__main__":
@@ -160,6 +160,9 @@ if __name__ == "__main__":
     print("=" * 20)
     print("\r")
 
+    save_vocab(X_train_new)
+    del vectorizer
+
     model = get_model()
     print(type(model))
 
@@ -167,6 +170,3 @@ if __name__ == "__main__":
 
     save_model(model)
     del model
-
-    loaded_model = load_model()
-    print(type(loaded_model))

@@ -35,5 +35,6 @@ function showResult(result) {
     console.log(result);
 	var outcome = result["result"][0];
 	console.log(outcome);
-    d3.select("#alertOutcome").text(outcome);
+    d3.select("#alertOutcome").text(
+		`Hei, are you craving for some ${outcome} food?`);
 }

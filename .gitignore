@@ -3,4 +3,6 @@ __pycache__
 .ipynb_checkpoints
 config.py
 reference.js
+cuisine_classifier.sav
+mbti_1.csv
 # config.js

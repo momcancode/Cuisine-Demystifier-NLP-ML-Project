@@ -30,11 +30,28 @@ function findCuisine(event) {
     );
 }
 
+
 function showResult(result) {
     console.log("showResult");
     console.log(result);
 	var outcome = result["result"][0];
 	console.log(outcome);
-    d3.select("#alertOutcome").text(
-		`Hei, are you craving for some ${outcome} food?`);
+    d3.select("#alertOutcome").html(
+		`<span>
+		Hei, are you craving for some <b>${outcome}</b> food?
+		<i class="fas fa-pepper-hot"></i>
+		<i class="fas fa-pizza-slice"></i>
+		</span>
+		`
+	);
 }
+
+
+// function showResult(result) {
+//     console.log("showResult");
+//     console.log(result);
+// 	var outcome = result["result"][0];
+// 	console.log(outcome);
+//     d3.select("#alertOutcome").text(
+// 		`Hei, are you craving for some ${outcome} food?`);
+// }

@@ -24,10 +24,10 @@ stemmer = PorterStemmer()
 
 # Machine learning
 from joblib import load
-from model.train import load_model, fit_tfidf
+import pickle
 import sklearn
-from sklearn.feature_extraction.text import TfidfVectorizer
-tfidf = TfidfVectorizer()
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer
 
 # Let's setup our Flask application.
 app = Flask(__name__)
@@ -84,11 +84,18 @@ def predict():
         print(e)
         return "Error"
 
-    model = load_model()
-    fitted_tfidf = fit_tfidf()
+    # Load the trained model
+    model = load("model/trained_model.joblib")
+
+    # Load the vectorized vocabulary
+    transformer = TfidfTransformer()
+    loaded_vec = CountVectorizer(
+        decode_error="replace",vocabulary=pickle.load(open("model/feature.pkl", "rb")))
+
+    X_transformed = transformer.fit_transform(loaded_vec.fit_transform(X_cleaned))
 
     # convert nparray to list so that we can serialise as json
-    result = model.predict(fitted_tfidf.transform(X_cleaned)).tolist()    
+    result = model.predict(X_transformed).tolist()    
 
     return jsonify({"result": result})
 

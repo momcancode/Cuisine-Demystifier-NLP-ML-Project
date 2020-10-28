@@ -103,9 +103,6 @@ def predict():
 if __name__ == "__main__":
     app.run(debug=True)
 
-    outcome = predict()
-    print(outcome)
-
 
 # def query_results_to_dicts(results):
 #     """

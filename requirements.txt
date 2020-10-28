@@ -9,7 +9,7 @@ joblib
 MarkupSafe==1.1.1
 mkl-fft==1.0.6
 mkl-random
-mkl-service
+mkl-service==2.3.0
 nltk
 numpy
 pandas

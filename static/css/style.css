@@ -19,11 +19,31 @@ body {
   font-style: italic;
 }
 
-.form-control {
+.divider {
+  height: 60px;
+}
+
+.panel {
+  background-color: rgb(255, 71, 95);
+  border-radius: 3%;
+}
+
+.panel-default>.panel-heading {
+  background-color: rgb(255, 71, 95);
+  color: white;
+  font-size: x-large;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+}
+
+textarea.form-control {
   height: 250px;
-  margin: auto;
-  position: relative;
- }
+  background-color: rgb(241, 219, 219);
+}
+
+#alertOutcome {
+  
+}
 
 footer {
   position: fixed;

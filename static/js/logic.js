@@ -26,13 +26,14 @@ function findCuisine(event) {
             }
         }
     ).then(
-        (data) => showResult(data)
+        (result) => showResult(result)
     );
 }
 
-function showResult(data) {
+function showResult(result) {
     console.log("showResult");
-    console.log(data);
-    var outcome = data[0];
+    console.log(result);
+	var outcome = result["result"][0];
+	console.log(outcome);
     d3.select("#alertOutcome").text(outcome);
 }

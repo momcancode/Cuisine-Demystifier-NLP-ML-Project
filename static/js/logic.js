@@ -30,16 +30,9 @@ function findCuisine(event) {
     );
 }
 
-// function showResult(data) {
-//     console.log("showResult");
-//     console.log(data);
-//     var outcome = "Unknown";
-
-//     if (data[0] == "I") {
-//         outcome = "Survived";
-//     } else {
-//         outcome = "Dead";
-//     }
-
-//     ;
-// }
+function showResult(data) {
+    console.log("showResult");
+    console.log(data);
+    var outcome = data[0];
+    d3.select("#alertOutcome").text(outcome);
+}

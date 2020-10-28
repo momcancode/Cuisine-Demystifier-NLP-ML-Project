@@ -113,7 +113,7 @@ def get_model():
     return SVC(kernel='linear')
 
 # Fit tfidf to X_train
-def fit_tfidf():
+def fit_tfidf(X_train_new):
 
     # Feature engineering using TF-IDF
     X_train_transformed = tfidf.fit_transform(X_train_new)

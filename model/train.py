@@ -4,7 +4,7 @@ import numpy as np
 import re
 import string
 from joblib import dump
-from pickle import dump
+import pickle
 
 # NLTK
 import nltk
@@ -161,7 +161,6 @@ if __name__ == "__main__":
     print("\r")
 
     save_vocab(X_train_new)
-    del vectorizer
 
     model = get_model()
     print(type(model))

@@ -8,7 +8,9 @@ Jinja2==2.11.2
 joblib==0.17.0
 MarkupSafe==1.1.1
 mkl-fft==1.2.0
+mkl-fft==1.0.6
 mkl-random==1.1.1
+mkl-random==1.0.1.1
 mkl-service==2.3.0
 nltk==3.5
 numpy==1.19.1

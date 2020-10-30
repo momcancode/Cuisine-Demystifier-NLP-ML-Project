@@ -32,29 +32,33 @@ from sklearn.feature_extraction.text import CountVectorizer
 # Let's setup our Flask application.
 app = Flask(__name__)
 
-"""
-Database connection setup: Let's look for an environment variable 'DATABASE_URL'.
-If there isn't one, we'll use a connection to a sqlite database.
-"""
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
+# """
+# Database connection setup: Let's look for an environment variable 'DATABASE_URL'.
+# If there isn't one, we'll use a connection to a sqlite database.
+# """
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
 
-# Remove tracking modifications
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# # Remove tracking modifications
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Use the `flask_sqlalchemy` library we'll create our variable `db` that is the connection to our database
-db = SQLAlchemy(app)
+# # Use the `flask_sqlalchemy` library we'll create our variable `db` that is the connection to our database
+# db = SQLAlchemy(app)
 
-"""
-From `models.py` we call `create_classes` that we will have a reference to the class
-we defined `Cuisine` that is bound to the underlying database table.
-"""
-Cuisine = create_classes(db)
+# """
+# From `models.py` we call `create_classes` that we will have a reference to the class
+# we defined `Cuisine` that is bound to the underlying database table.
+# """
+# Cuisine = create_classes(db)
 
 # create route that renders index.html template
 @app.route("/")
 def home():
+    cuisine_list = ['African', 'American', 'British', 'Caribbean', 'Chinese',
+    'East European', 'French', 'Greek', 'Indian', 'Irish', 'Italian', 'Japanese',
+    'Korean', 'Mexican', 'Nordic', 'North African', 'Pakistani', 'Portuguese',
+    'South American', 'Spanish', 'Thai and South-East Asian', 'Turkish and Middle Eastern']
 
-    return render_template("index.html")
+    return render_template("index.html", cuisine_list=cuisine_list)
 
 
 # Create a function to clean ingredient text

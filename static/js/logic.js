@@ -46,6 +46,11 @@ function showResult(result) {
 	);
 }
 
+d3.select("#clear").on("click", (event) => clear(event));
+
+function clear() {
+	document.getElementById("ingredients").reset();
+}
 
 // function showResult(result) {
 //     console.log("showResult");

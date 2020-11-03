@@ -38,11 +38,11 @@ The workflow is illustrated in the above NLP pipeline.
 
 * Evaluation: use accuracy score, confusion matrix, classification report, and k-fold cross validation.
 
-**Please refer to models' training and evaluation [here](model/)
+**Please refer to the models' training and evaluation [here](model/)**
 
 * Machine Learning Web App:
 
-    * Back end: Python Flask-powered RESTful API
+    * Back end: Python Flask-powered RESTful API. Use Python Pickle library to save a vectorized vocabulary to feed into the application to transform new ingredient text data.
 
     * Front end: HTML, CSS (with Bootstrap), Javascript
 

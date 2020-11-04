@@ -34,15 +34,19 @@ The workflow is illustrated in the above NLP pipeline.
 
 * Feature Engineering: use Bag of Words and Bag of Bi-grams with TF-IDF.
 
-* Modeling: sklearn libraries. Trained models include Naive Bayes, Random Forest, and SVC with and without oversampling for unigram and bigrams.
+* Modeling: sklearn libraries. Trained models include Naive Bayes (NB), Random Forest, and SVC with or without oversampling for unigram, or both unigram and bigrams.
 
 * Evaluation: use accuracy score, confusion matrix, classification report, and k-fold cross validation.
 
-**Please refer to the models' training and evaluation [here](model/)**
+    **Please refer to the models' training and evaluation [here](model/).**
 
-* Machine Learning Web App:
+    **The chosen model is SVC with TF-IDF unigram and oversampling.** It has the highest average accuracy score in k-fold cross validation. Like NB model using unigram, it predicts very well in Chinese, Indian, Mexican, Thai and South-East Asian cuisines. It misses out completely on Portuguese cuisine, and scores very low on Nordic cuisine. A closer look suggests that it does much better than the NB model with unigram in identifying dominant labels like British and Italian cuisines. This can explain the higher overall score of the model. The SVC model with unigram does better than the NB model with unigram in some labels and vice versa. As I'm not particularly interested in any specific cuisine, I'll select the SVC model with unigram. Following is the Confusion Matrix of the SVC model with unigram and oversampling.
+    
+![cfm_SVC](static/images/cfm_svc_oversampling_uni.png)    
+    
+* ML Web App:
 
-    * Back end: Python Flask-powered RESTful API. Use Python Pickle library to save a vectorized vocabulary to feed into the application to transform new ingredient text data.
+    * Back end: Python Flask-powered RESTful API. Use Python "pickle" library to save a vectorized vocabulary to feed into the application to transform new ingredient text data.
 
     * Front end: HTML, CSS (with Bootstrap), Javascript
 
@@ -60,7 +64,7 @@ The workflow is illustrated in the above NLP pipeline.
 * More data cleaning: removing more words that do not add much value to the task, e.g. preparation steps.
 * Collect more high-quality data
 * Keep training the models with more data
-* Explore the text classification with more machine learning models and deep learning models
+* Explore the text classification with more ML models and deep learning models
 * Try Feature engineering with word embeddings
 * Hyper parameter tuning
 * Add more styles and data visualisations to front end

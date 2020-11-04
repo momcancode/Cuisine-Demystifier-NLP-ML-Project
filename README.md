@@ -10,7 +10,7 @@ Before starting the project, I've also checked out Google Cloud Natural Language
 
 ## Where is the data from?
 
-The ingredients' text and some images of nearly 5000 recipes have been fully scraped from https://www.bbc.co.uk/food/cuisines. I've found this website is well-structured in cuisine classification and rich in recipe content. Please refer to my [webscraping notebook](data/00_extract_scraped_bbcfood_cuisine.ipynb) for more details.
+The ingredients' text and some images of nearly 5000 recipes have been fully scraped from https://www.bbc.co.uk/food/cuisines. I've found that this website is well-structured in cuisine classification and rich in recipe content. Please refer to my [webscraping notebook](data/00_extract_scraped_bbcfood_cuisine.ipynb) for more details.
 
 The cuisine classification is quite subjective and can vary among recipe websites. Relabelling cuisines might be necessary depending on specific analysis requirements. 
 
@@ -22,21 +22,21 @@ The cuisine classification is quite subjective and can vary among recipe website
 
 The workflow is illustrated in the above NLP pipeline.
 
-* Data Acquisition: webscrape the data using BeautifulSoup and Splinter.
+* Data Acquisition: webscraped the data using BeautifulSoup and Splinter.
 
-* Exploratory Data Analysis: use Python, Pandas, Numpy, Matplotlib, Seaborn, Bag of Words, Bag of Bi-grams, Word Cloud, etc. Please refer to the **[EDA notebook](model/00_EDA.ipynb)** for more details.
+* Exploratory Data Analysis: used Python, Pandas, Numpy, Matplotlib, Seaborn, Bag of Words, Bag of Bi-grams, Word Cloud, etc. Please refer to the **[EDA notebook](model/00_EDA.ipynb)** for more details.
 
 * Text cleaning and pre-processing:
 
-    * Use Python regular expression, and other NLP libraries including string, unicodedata, and NLTK.
+    * Used Python regular expression, and other NLP libraries including string, unicodedata, and NLTK.
     
     * NLTK libraries used to do word tokenization, removal of stop words, stemming, and lemmatization.
 
-* Feature Engineering: use Bag of Words and Bag of Bi-grams with TF-IDF.
+* Feature Engineering: used Bag of Words and Bag of Bi-grams with TF-IDF.
 
 * Modeling: scikit-learn libraries. Trained models include Naive Bayes (NB), Random Forest, and SVC with or without oversampling for unigram, or both unigram and bigrams.
 
-* Evaluation: use accuracy score, confusion matrix, classification report, and k-fold cross validation.
+* Evaluation: used accuracy score, confusion matrix, classification report, and k-fold cross validation.
 
     **Please refer to the [models' training and evaluation](model/) for more details.**
 

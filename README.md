@@ -34,7 +34,7 @@ The workflow is illustrated in the above NLP pipeline.
 
 * Feature Engineering: use Bag of Words and Bag of Bi-grams with TF-IDF.
 
-* Modeling: sklearn libraries. Trained models include Naive Bayes (NB), Random Forest, and SVC with or without oversampling for unigram, or both unigram and bigrams.
+* Modeling: scikit-learn libraries. Trained models include Naive Bayes (NB), Random Forest, and SVC with or without oversampling for unigram, or both unigram and bigrams.
 
 * Evaluation: use accuracy score, confusion matrix, classification report, and k-fold cross validation.
 
@@ -57,6 +57,20 @@ The workflow is illustrated in the above NLP pipeline.
 
 ## Demo
 
+https://cuisine-demystifier.herokuapp.com/
+
+
+## How to run the codes on your local machine
+
+1. Clone the github repo to your local machine:
+
+    `git@github.com:momcancode/Cuisine-Demystifier-NLP-ML-Project.git`
+
+2. Ensure that the libraries listed in requirements.txt installed. Otherwise, run:
+
+    `$ pip install -r requirements.txt`
+    
+3. Run `app.py` in your command and you're now ready to explore the app.
 
 
 ## TO DO:

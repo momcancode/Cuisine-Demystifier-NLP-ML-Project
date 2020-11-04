@@ -24,7 +24,7 @@ The workflow is illustrated in the above NLP pipeline.
 
 * Data Acquisition: webscrape the data using BeautifulSoup and Splinter.
 
-* Exploratory Data Analysis: use Python, Pandas, Numpy, Matplotlib, Seaborn, Bag of Words, Bag of Bi-grams, Word Cloud, etc. Please refer to EDA notebook [here](model/00_EDA.ipynb).
+* Exploratory Data Analysis: use Python, Pandas, Numpy, Matplotlib, Seaborn, Bag of Words, Bag of Bi-grams, Word Cloud, etc. Please refer to the **[EDA notebook](model/00_EDA.ipynb)** for more details.
 
 * Text cleaning and pre-processing:
 
@@ -38,7 +38,7 @@ The workflow is illustrated in the above NLP pipeline.
 
 * Evaluation: use accuracy score, confusion matrix, classification report, and k-fold cross validation.
 
-    **Please refer to the models' training and evaluation [here](model/).**
+    **Please refer to the [models' training and evaluation](model/) for more details.**
 
     **The chosen model is SVC with TF-IDF unigram and oversampling.** It has the highest average accuracy score in k-fold cross validation. Like NB model using unigram, it predicts very well in Chinese, Indian, Mexican, Thai and South-East Asian cuisines. It misses out completely on Portuguese cuisine, and scores very low on Nordic cuisine. A closer look suggests that it does much better than the NB model with unigram in identifying dominant labels like British and Italian cuisines. This can explain the higher overall score of the model. The SVC model with unigram does better than the NB model with unigram in some labels and vice versa. As I'm not particularly interested in any specific cuisine, I'll select the SVC model with unigram. Following is the Confusion Matrix of the SVC model with unigram and oversampling.
     
@@ -52,7 +52,7 @@ The workflow is illustrated in the above NLP pipeline.
 
     * Database: SQLite
 
-    * Deployment: Please explore the [web app](https://cuisine-demystifier.herokuapp.com/) successfully deployed to Heroku.
+    * Deployment: Please explore the **[web app](https://cuisine-demystifier.herokuapp.com/)** successfully deployed to Heroku.
 
 
 ## Demo

@@ -7,19 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/css/style.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Headland One'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 </head>
+
 
 <body>
 
   <div class="jumbotron">
     <div id="header">
       <h1>Cuisine Classifier</h1>      
-      <h3>Demystify Cuisine and Culture From Ingredients using Natural Language Processing and Machine Learning</p>
+      <p>Demystify Cuisine and Culture From Ingredients using Natural Language Processing and Machine Learning</p>
     </div> 
   </div>
 
-  <section id="main">
+  <section class="main">
     <div class="container-fluid">
       <!-- <div class="row">
         <div class="col-md-12">  
@@ -102,13 +103,13 @@
     </div>  
   </section>
 
-  <section id="wordcloud">
+  <section class="wordcloud">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <div class="thumbnail">
             <div class="caption">
-              <h2>Explore Most Common Ingredients from Cuisines Around The World</h2>
+              <h2>Most Common Ingredients from Cuisines Around The World</h2>
               <h3>All Cuisines</h3>
             </div>
             <img src="static/images/word_cloud/all_cuisines.png">
@@ -122,6 +123,25 @@
               <h3>{{ cuisine }} Cuisine</h3>
             </div>
             <img src="static/images/word_cloud/{{cuisine}}.png">
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="wordcloud">
+    <div class="container-fluid">
+      <div class="row">
+        <h2>What If Taking Out The Most Used Ingredients in All Cuisines like
+          <br>oil, salt, black pepper, sugar, butter, leaf, onion, garlic?</h2>
+        {% for cuisine in cuisine_list %}
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <div class="caption">
+              <h3>{{ cuisine }} Cuisine</h3>
+            </div>
+            <img src="static/images/word_cloud/{{cuisine}}_reduced.png">
           </div>
         </div>
         {% endfor %}

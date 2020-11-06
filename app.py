@@ -80,34 +80,29 @@ def predict():
     data = request.json
     ingredient_text = data["ingredients"]
 
-    if ingredient_text == "":
-        return False
-    
-    else: 
-    
-        # create panda series from received data
-        try:
-            X_cleaned = pd.Series([preprocess(ingredient_text)])
+    # create panda series from received data
+    try:
+        X_cleaned = pd.Series([preprocess(ingredient_text)])
 
-        except Exception as e:
-            print("Error Parsing Input Data")
-            print(e)
-            return "Error"
+    except Exception as e:
+        print("Error Parsing Input Data")
+        print(e)
+        return "Error"
 
-        # Load the trained model
-        model = load("model/trained_model.joblib")
+    # Load the trained model
+    model = load("model/trained_model.joblib")
 
-        # Load the vectorized vocabulary
-        transformer = TfidfTransformer()
-        loaded_vec = CountVectorizer(
-            decode_error="replace",vocabulary=pickle.load(open("model/feature.pkl", "rb")))
+    # Load the vectorized vocabulary
+    transformer = TfidfTransformer()
+    loaded_vec = CountVectorizer(
+        decode_error="replace",vocabulary=pickle.load(open("model/feature.pkl", "rb")))
 
-        X_transformed = transformer.fit_transform(loaded_vec.fit_transform(X_cleaned))
+    X_transformed = transformer.fit_transform(loaded_vec.fit_transform(X_cleaned))
 
-        # convert nparray to list so that we can serialise as json
-        result = model.predict(X_transformed).tolist()    
+    # convert nparray to list so that we can serialise as json
+    result = model.predict(X_transformed).tolist()    
 
-        return jsonify({"result": result})
+    return jsonify({"result": result})
 
 if __name__ == "__main__":
     app.run(debug=True)

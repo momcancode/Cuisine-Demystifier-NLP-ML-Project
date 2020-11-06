@@ -3,33 +3,39 @@
 // 	console.log(data)
 // });
 
+// Event: add ingredients' text to find cuisine
 d3.select("#findCuisine").on("click", (event) => findCuisine(event));
 
 function findCuisine(event) {
     d3.event.preventDefault();
-    
-	let ingredients = d3.select("#ingredients").node().value;
-	
-	let data = {
-		"ingredients": ingredients
-	};
 
-    d3.json(
-        "/predict", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
+	let ingredients = d3.select("#ingredients").node().value;
+    
+    if (ingredients==="") {
+        d3.select("#alertOutcome").text("Please add some ingredients.");
+    } else {
+        let data = {
+            "ingredients": ingredients
+        };
+    
+        d3.json(
+            "/predict", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
             }
-        }
-    ).then(
-        (result) => showResult(result)
-    );
+        ).then(
+            (result) => showResult(result)
+        );
+    }
 }
 
 
 function showResult(result) {
-	var outcome = result["result"][0];
+    var outcome = result["result"][0];
+    console.log(outcome);
     d3.select("#alertOutcome").html(
 		`<span>
 		Hei, are you craving for some <b>${outcome}</b> food?
@@ -43,7 +49,7 @@ function showResult(result) {
 d3.select("#clear").on("click", (event) => clear(event));
 
 function clear() {
-	document.getElementById("ingredients").reset();
+	document.getElementById("ingredients").value="";
 }
 
 

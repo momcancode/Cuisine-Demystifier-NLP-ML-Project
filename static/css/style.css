@@ -3,7 +3,7 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 350px;
+  min-height: 300px;
   margin-bottom: 0;
 }
 
@@ -12,8 +12,8 @@ body {
 }
 
 #header {
-  padding-left: 70px;
-  padding-top: 80px;
+  padding-left: 60px;
+  padding-top: 70px;
   color: whitesmoke;
   font-family: "Roboto";
   /* font-style: italic; */
@@ -49,13 +49,15 @@ label {
 }
 
 textarea.form-control {
-  height: 250px;
+  height: 200px;
   background-color: rgb(241, 219, 219);
 }
 
 #alertOutcome {
   font-family: 'Headland One';
   font-size: x-large;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .btn {

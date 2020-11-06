@@ -51,13 +51,3 @@ d3.select("#clear").on("click", (event) => clear(event));
 function clear() {
 	document.getElementById("ingredients").reset();
 }
-
-
-// function validateForm() {
-//     var x = document.forms["myForm"]["ingredients"].value;
-
-//     if (x == "") {
-//         alert("Please enter a list of ingredients!");
-//         return false;
-//     }
-// }

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="static/css/style.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Noto Sans'>
 </head>
 
 
@@ -50,15 +50,15 @@
                     </li>
                   </ul>
                 </div>
-                <button id="findCuisine" type="submit" class="btn btn-default"><b>Submit</b></button>
-                <button id="clear" type="submit" class="btn btn-default"><b>Try again?</b></button>
+                <button id="findCuisine" type="submit" class="btn btn-default">Submit</button>
+                <button id="clear" type="submit" class="btn btn-default">Try again?</button>
               </form>
             </div>
           </div>
           <div id="alertOutcome" class="alert alert-primary" role="alert"></div>
           <a href="#cuisine_list">
             <button data-toggle="collapse" data-target="#feedback" class="btn btn-default">
-              <b>RESULT NOT RIGHT? CLICK HERE!</b>
+              RESULT NOT RIGHT? CLICK HERE!
             </button>
           </a>
           <div id="feedback" class="collapse">
@@ -90,7 +90,7 @@
                       </li>
                     </ul>
                   </div>
-                  <button id="give_feedback" type="submit" class="btn btn-default"><b>Submit</b></button>
+                  <button id="give_feedback" type="submit" class="btn btn-default">Submit</button>
                 </form>
               </div>
             </div>
@@ -106,55 +106,27 @@
       <div class="row">
         <div class="col-md-12">
           <div class="thumbnail">
-            <div class="caption">
-              <h2>Explore Most Common Ingredients from Cuisines Around The World</h2>
-              <h3>All Cuisines</h3>
-            </div>
+            <h2>Explore Most Common Ingredients from Cuisines Around The World</h2>
+            <h3>All Cuisines</h3>
             <img src="static/images/word_cloud/all_cuisines.png">
           </div>
+          <br>
+          <h2>
+            <br>What If Taking Out The Most Used Ingredients in All Cuisines like
+            <br>Oil, Salt, Black Pepper, Sugar, Butter, Leaf, Onion, and Garlic?</h2>
         </div>
-      </div>
 
-      {% for cuisine in cuisine_list %}
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
+        {% for cuisine in cuisine_list %}
+        <div class="col-md-6">
           <div class="thumbnail">
-            <div class="caption">
-              <h3>{{ cuisine }} Cuisine</h3>
-            </div>
-            <img src="static/images/word_cloud/{{cuisine}}.png">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="thumbnail">
-            <div class="caption">
-              <h3>{{ cuisine }} Cuisine</h3>
-            </div>
+            <h3>{{ cuisine }} Cuisine</h3>
             <img src="static/images/word_cloud/{{cuisine}}_reduced.png">
           </div>
         </div>
-        <div class="col-md-2"></div>
-      </div>
-      {% endfor %}
-
-    </div>
-  </section>
-
-  <section class="wordcloud">
-    <div class="container-fluid">
-      <div class="row">
-        <h2>What If Taking Out The Most Used Ingredients in All Cuisines like
-          <br>Oil, Salt, Black Pepper, Sugar, Butter, Leaf, Onion, and Garlic?</h2>
-        {% for cuisine in cuisine_list %}
-
         {% endfor %}
       </div>
     </div>
   </section>
-
-
-
 
   <footer class="page-footer font-small primary-color-dark">
     <div class="footer-copyright text-center py-3">Monash University Data Analytics Bootcamp Final

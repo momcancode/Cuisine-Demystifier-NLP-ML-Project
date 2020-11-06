@@ -41,7 +41,7 @@ function showResult(result) {
 		Hei, are you craving for some <b>${outcome}</b> food?
 		<i class="fas fa-pepper-hot"></i>
 		<i class="fas fa-pizza-slice"></i>
-		</span>
+        </span>
 		`
 	);
 }
@@ -52,11 +52,12 @@ function clear() {
 	document.getElementById("ingredients").reset();
 }
 
-// function showResult(result) {
-//     console.log("showResult");
-//     console.log(result);
-// 	var outcome = result["result"][0];
-// 	console.log(outcome);
-//     d3.select("#alertOutcome").text(
-// 		`Hei, are you craving for some ${outcome} food?`);
+
+// function validateForm() {
+//     var x = document.forms["myForm"]["ingredients"].value;
+
+//     if (x == "") {
+//         alert("Please enter a list of ingredients!");
+//         return false;
+//     }
 // }

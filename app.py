@@ -8,7 +8,6 @@ from sqlalchemy.sql.expression import func
 from flask import (Flask, render_template, jsonify, request, redirect, session)
 from models import create_classes
 from flask_sqlalchemy import SQLAlchemy
-from config import secret_key
 
 # NLP libraries
 import re

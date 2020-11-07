@@ -27,6 +27,7 @@ function findCuisine(event) {
 
 function showResult(result) {
     var outcome = result["result"][0];
+    
     d3.select("#alertOutcome").html(
 		`<span>
 		Are you craving for some <b>${outcome}</b> food?
@@ -34,15 +35,18 @@ function showResult(result) {
 		<i class="fas fa-pizza-slice"></i>
         </span>
 		`
-	);
+    );
 }
+
 
 // Clear text in textarea
 d3.select("#clear").on("click", (event) => clear(event));
 
 function clear() {
-	document.getElementById("ingredients").value="";
+    document.getElementById("ingredients").value="";
+    document.getElementById("alertOutcome").value="";
 }
+
 
 // Event: user gives feedback about model's predictions
 d3.select("#giveFeedback").on("click", (event) => giveFeedback(event));
@@ -51,12 +55,14 @@ function giveFeedback(event) {
     d3.event.preventDefault();
     console.log("Giving Feedback");
 
+    let ingredientText = d3.select("#ingredients").node().value;
     let chosenCuisine = d3.select("#chosenCuisine").node().value;
     let enteredCuisine = d3.select("#enteredCuisine").node().value;
 	let recipeName = d3.select("#recipeName").node().value;
 	let recipeLink = d3.select("#recipeLink").node().value;
 
 	let feedback = {
+        "ingredientText": ingredientText,
         "chosenCuisine": chosenCuisine,
         "enteredCuisine": enteredCuisine,
         "recipeName": recipeName,

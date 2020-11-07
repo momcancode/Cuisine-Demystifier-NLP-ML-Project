@@ -5,9 +5,10 @@ import os
 import simplejson
 from sqlalchemy.sql import select, column, text
 from sqlalchemy.sql.expression import func
-from flask import (Flask, render_template, jsonify, request, redirect)
+from flask import (Flask, render_template, jsonify, request, redirect, session)
 from models import create_classes
 from flask_sqlalchemy import SQLAlchemy
+from config import secret_key
 
 # NLP libraries
 import re
@@ -32,23 +33,27 @@ from sklearn.feature_extraction.text import CountVectorizer
 # Setup the Flask application.
 app = Flask(__name__)
 
-# """
-# Database connection setup: Let's look for an environment variable 'DATABASE_URL'.
-# If there isn't one, we'll use a connection to a sqlite database.
-# """
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
+# Set the secret key to some random bytes. https://flask.palletsprojects.com/en/1.1.x/quickstart/
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-# # Remove tracking modifications
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+"""
+Database connection setup: Let's look for an environment variable 'DATABASE_URL'.
+If there isn't one, we'll use a connection to a sqlite database.
+"""
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
 
-# # Use the `flask_sqlalchemy` library we'll create our variable `db` that is the connection to our database
-# db = SQLAlchemy(app)
+# Remove tracking modifications
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# """
-# From `models.py` we call `create_classes` that we will have a reference to the class
-# we defined `Cuisine` that is bound to the underlying database table.
-# """
-# Cuisine = create_classes(db)
+# Use the `flask_sqlalchemy` library we'll create our variable `db` that is the connection to our database
+db = SQLAlchemy(app)
+
+"""
+From `models.py` we call `create_classes` that we will have a reference to the class
+we defined `Feedback` that is bound to the underlying database table.
+"""
+Cuisine, Feedback = create_classes(db)
+
 
 # create route that renders index.html template
 @app.route("/")
@@ -90,6 +95,7 @@ def preprocess(text):
     return processed_text
 
 
+# Create route that requests the ingredients' text and return a predicted cuisine
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.json
@@ -115,9 +121,39 @@ def predict():
     X_transformed = transformer.fit_transform(loaded_vec.fit_transform(X_cleaned))
 
     # convert nparray to list so that we can serialise as json
-    result = model.predict(X_transformed).tolist()    
+    result = model.predict(X_transformed).tolist()
+
+    session["prediction"] = result[0]
 
     return jsonify({"result": result})
+
+
+# Create route that requests the feedback from customers
+# and update to the database table 'feedback'
+@app.route("/feedback", methods=["POST"])
+def feedback():
+
+    feedback = request.json
+    ingredient_text = feedback["ingredientText"]
+    predicted_cuisine = session.pop('prediction', None)
+    actual_chosen_cuisine = feedback["chosenCuisine"]
+    actual_entered_cuisine = feedback["enteredCuisine"]
+    recipe_name = feedback["recipeName"]
+    recipe_link = feedback["recipeLink"]
+
+    feedback_data = Feedback(
+        ingredient_text=ingredient_text,
+        predicted_cuisine=predicted_cuisine,
+        actual_chosen_cuisine=actual_chosen_cuisine,
+        actual_entered_cuisine=actual_entered_cuisine,
+        recipe_name=recipe_name,
+        recipe_link=recipe_link)
+
+    db.session.add(feedback_data)
+    db.session.commit()
+
+    return jsonify({"loaded": True})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

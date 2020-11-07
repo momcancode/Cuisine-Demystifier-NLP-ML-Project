@@ -60,6 +60,10 @@ textarea.form-control {
   margin-bottom: 0;
 }
 
+#thankyou {
+  font-family: 'Noto Sans';
+}
+
 .btn {
   background-color: rgb(255, 71, 95);
   color: white;

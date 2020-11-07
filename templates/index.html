@@ -72,7 +72,7 @@
                         <select class="form-control" id="chosenCuisine" required>
                           <option style="display:none"></option>
                           {% for cuisine in cuisine_list %}
-                          <option value={{cuisine}}>{{cuisine}}</option>
+                          <option>{{cuisine}}</option>
                           {% endfor %}
                         </select>
                       </li>
@@ -95,6 +95,7 @@
               </div>
             </div>
           </div>
+          <div id="thankyou" class="alert alert-primary" role="alert"></div>
         </div>
         <div class="col-md-3"></div>
       </div>

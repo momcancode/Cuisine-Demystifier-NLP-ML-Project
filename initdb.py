@@ -32,11 +32,10 @@ print("os env", os.environ.get('DATABASE_URL', ''))
 engine = create_engine(connection)
 
 """
-If the database table already exists we will not be adding to the 
-database.
+Create table cuisine_ingredients to load scraped data from csv
+If the table already exists we will not be adding to the database.
 """
 if not engine.has_table("cuisine_ingredients"):
-    print("Creating Table")
 
     """
     Here we'll define the table using the SQLAlchemy ORM interface
@@ -73,6 +72,29 @@ if not engine.has_table("cuisine_ingredients"):
         conn.execute(new_table.insert(), seed_data)
 
     print("Seed Data Imported")
+else:
+    print("Table already exists")
+
+
+# Create table feedback to update users' feedback on model's performance
+if not engine.has_table("feedback"):
+    print("Creating Table")
+
+    new_table = Table(
+        'feedback', meta,
+        Column('id', Integer, primary_key=True, autoincrement=True),
+        Column('ingredient_text', String),
+        Column('predicted_cuisine', String),
+        Column('actual_chosen_cuisine', String),
+        Column('actual_entered_cuisine', String),
+        Column('recipe_name', String),
+        Column('recipe_link', String),
+    )
+
+    meta.create_all(engine)
+    
+    print("Table created")
+
 else:
     print("Table already exists")
 

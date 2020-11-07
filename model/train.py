@@ -1,12 +1,13 @@
 # Import dependencies
 import pandas as pd
 import numpy as np
-import re
-import string
 from joblib import dump
 import pickle
 
-# NLTK
+# NLP libraries
+import re
+import string
+import unicodedata
 import nltk
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
@@ -27,6 +28,18 @@ from sklearn.svm import SVC
 # SQL Alchemy
 from sqlalchemy import create_engine
 
+# Create a function to remove accented characters
+def remove_accented_chars(matchobj):
+    text = matchobj.group()
+    new_text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+    return new_text
+
+words_to_remove = [
+    "tbsp", "roughly", "chopped", "tsp", "finely", "oz", "plus", "optional",
+    "extra", "fresh", "freshly", "ground", "thinly", "sliced", "clove", "pint",
+    "cut", "kg", "lb", "cm", "ml", "mm", "small", "large", "medium", "diced", "slice",
+    "pinch", "peeled", "grated", "removed", "handful", "piece", "crushed", "red", "dried",
+    "drained", "rinsed", "halved", "trimmed", "deseeded", "x", "beaten", "available", "supermarket"]
 
 # Create a function to clean ingredient text
 def clean(doc):
@@ -34,8 +47,10 @@ def clean(doc):
     doc = doc.str.replace(r'\w*[\d¼½¾⅓⅔⅛⅜⅝]\w*', '')
     doc = doc.str.translate(str.maketrans('', '', string.punctuation))
     doc = doc.str.replace(r'[£×–‘’“”⁄]', '')
+    doc = doc.apply(lambda x: re.sub(r'[âãäçèéêîïñóôûüōưấớ]', remove_accented_chars, x))
     doc = doc.apply(lambda x: word_tokenize(x))
     doc = doc.apply(lambda x: [word for word in x if not word in stop_words_nltk])
+    doc = doc.apply(lambda x: [word for word in x if not word in words_to_remove])
     doc = doc.apply(lambda x: [stemmer.stem(word) for word in x])
     processed_doc = doc.apply(lambda x: ' '.join([word for word in x]))
 

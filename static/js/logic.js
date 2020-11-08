@@ -43,8 +43,12 @@ function showResult(result) {
 d3.select("#clear").on("click", (event) => clear(event));
 
 function clear() {
-    document.getElementById("ingredients").value="";
-    document.getElementById("alertOutcome").value="";
+    document.getElementById("ingredients").remove();
+    document.getElementById("alertOutcome").remove();
+    document.getElementById("chosenCuisine").remove();
+    document.getElementById("enteredCuisine").remove();
+    document.getElementById("recipeName").remove();
+    document.getElementById("recipeLink").remove();
 }
 
 
